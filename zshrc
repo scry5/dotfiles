@@ -52,13 +52,13 @@ plugins=(git golang)
 source $ZSH/oh-my-zsh.sh
 source ~/.util/fzf.zsh
 # ZSH Functions
-fpath=(~/.zsh_functions $fpath);
-autoload -U $fpath[1]/*(.:t)
+#fpath=(~/.zsh_functions $fpath);
+#autoload -U $fpath[1]/*(.:t)
 # Aliases
 alias gotc="go test -cover"
 alias gotac="go test -coverpkg=all -cover ./..."
 alias nanoe="nano +-1"
-
+alias vim="nvim"
 eval "$(direnv hook zsh)"
 [ -z "$(ps -ef | grep cron | grep -v grep)" ] && sudo /etc/init.d/cron start &> /dev/null
 
