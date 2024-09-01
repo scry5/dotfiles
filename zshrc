@@ -59,6 +59,33 @@ alias gotc="go test -cover"
 alias gotac="go test -coverpkg=all -cover ./..."
 alias nanoe="nano +-1"
 alias vim="nvim"
+
+## Aliases from github.com/jez/dotfiles
+
+# manipulate files verbosely (print log of what happened)
+alias cp="cp -v"
+alias mv="mv -v"
+alias rm="rm -v"
+
+alias cdd="cd .."
+# Easily download an MP3 from youtube on the command line
+which youtube-dl &> /dev/null && alias youtube-mp3="youtube-dl --extract-audio --audio-format mp3"
+# list disk usage statistics for the current folder
+alias duls="du -h -d1 | sort -hr"
+# print my IP
+alias ip="curl curlmyip.com"
+
+GIT_PRETTY_FORMAT="--pretty=\"%C(bold green)%h%Creset%C(auto)%d%Creset %s\""
+GIT_PRETTY_FORMAT_AUTHOR="--pretty=\"%C(bold green)%h%Creset %C(yellow)%an%Creset%C(auto)%d%Creset %s\""
+# pretty Git log
+alias gl="git log --graph $GIT_PRETTY_FORMAT"
+# pretty Git log, all references
+alias gll='gl --all'
+# pretty Git log, show authors
+alias gla="git log --graph $GIT_PRETTY_FORMAT_AUTHOR"
+# pretty Git log, all references, show authors
+alias glla='gla --all'
+## Direnv hook
 eval "$(direnv hook zsh)"
 [ -z "$(ps -ef | grep cron | grep -v grep)" ] && sudo /etc/init.d/cron start &> /dev/null
 
