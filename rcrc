@@ -1,2 +1,0 @@
-SYMLINK_DIRS="oh-my-zsh zsh_functions"
-EXCLUDES="README.md LICENSE"

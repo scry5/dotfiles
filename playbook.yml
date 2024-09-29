@@ -1,0 +1,53 @@
+---
+- hosts: localhost
+  vars:
+    template_dir: "{{ playbook_dir }}/templates/"
+    universal_templates:
+      - zshrc
+      - fzf.zsh
+      - custom_fzf.zsh
+    home_templates:
+      - gitconfig
+  tasks:
+    - name : Determine what group the current device is
+      ansible.builtin.group_by:
+        key: "{{ 'work' if ansible_hostname is match('(st-.*|.*mydev.*)') else 'home' }}"
+      changed_when: false
+    - name: Clone oh-my-zsh
+      git:
+        repo: https://github.com/ohmyzsh/ohmyzsh
+        dest: "{{ ansible_env.HOME }}/.oh-my-zsh"
+        clone: true
+        version: b0204f78394d84771436a7717aafee6cad140319
+
+    - name: Clone fzf
+      git:
+        repo: https://github.com/junegunn/fzf
+        dest: "{{ ansible_env.HOME }}/.fzf"
+        clone: true
+        version: fc69308057cf8486d2753efd76682fd613471da6
+    
+    - name: Manage global dotfiles
+      blockinfile:
+        path: "{{ ansible_env.HOME }}/.{{ item }}"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK"
+        block: "{{ lookup('template',template_dir + item + '.j2') }}"
+        create: yes
+        mode: 0755
+        prepend_newline: true
+      loop: "{{ universal_templates }}"
+
+    - name: Manage home dotfiles
+      blockinfile:
+        path: "{{ ansible_env.HOME }}/.{{ item }}"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK"
+        block: "{{ lookup('template',template_dir + item + '.j2') }}"
+        create: yes
+        mode: 0755
+        prepend_newline: true
+      loop: "{{ home_templates }}"
+      when: '"home" in group_names'
+
+    - name: Reminders
+      debug:
+        msg: "Remember to `source ~/.zshrc`"
