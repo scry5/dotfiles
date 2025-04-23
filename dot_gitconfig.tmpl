@@ -1,0 +1,22 @@
+[user]
+  name = {{- if .is_work_machine -}} Kevin Xia {{- else -}} scry5 {{end}}
+  email = {{- if .is_work_machine -}} kevinxia@stripe.com {{- else -}}72686328+scry5@users.noreply.github.com{{end}}
+[fetch]
+  prune = true
+[push]
+  default = simple
+[core]
+  preloadindex = true
+  {{- if .is_work_machine -}}
+  deltabasecachelimit = 4g 
+  {{end}}
+[feature]
+  manyfiles = true
+[diff]
+  algorithm = histogram
+  colorMoved = plain 
+  renames = true 
+[column]
+  ui = auto
+[branch]
+  sort = -committerdate
