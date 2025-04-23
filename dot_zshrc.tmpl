@@ -1,0 +1,93 @@
+{{ if .is_work_laptop}}
+# Stripe Setup
+if [[ -f ~/.stripe/shellinit/zshrc ]]; then
+	source ~/.stripe/shellinit/zshrc
+fi
+{{end}}
+{{ if .is_devbox }}
+# Devbox specific setup
+source ~/.bashrc
+eval "$(nodenv init -)"
+{{end}}
+# Go
+alias gotc="go test -cover"
+alias gotac="go test -coverpkg=all -cover ./..."
+alias got="go test"
+alias gota="go test ./..."
+alias gor="go run"
+
+alias vim="nvim"
+
+## manipulate files verbosely (print log of what happened)
+alias cp="cp -v"
+alias mv="mv -v"
+alias rm="rm -v"
+alias cdd="cd .."
+
+## list disk usage statistics for the current folder
+alias duls="du -h -d1 | sort -hr"
+# print my IP
+alias ip="curl curlmyip.com"
+
+# Git
+GIT_PRETTY_FORMAT="--pretty=\"%C(bold green)%h%Creset%C(auto)%d%Creset %s\""
+GIT_PRETTY_FORMAT_AUTHOR="--pretty=\"%C(bold green)%h%Creset %C(yellow)%an%Creset%C(auto)%d%Creset %s\""
+## pretty Git log
+alias gl="git log --graph $GIT_PRETTY_FORMAT"
+## pretty Git log, all references
+alias gll="gl --all"
+## pretty Git log, show authors
+alias gla="git log --graph $GIT_PRETTY_FORMAT_AUTHOR"
+## pretty Git log, all references, show authors
+alias glla="gla --all"
+alias ga="git add"
+alias gcam="git commit -a -m"
+alias gcb="git checkout -b"
+alias gco="git checkout"
+alias gbs="git bisect"
+alias gbl="git blame -w"
+alias gbd="git branch --delete"
+alias gsync="git checkout master && git pull && git checkout - && git rebase master"
+alias gcp="git cherry-pick"
+alias gst="git status"
+{{- if .is_work_machine }}
+## Work Specific
+alias pst="pay stack"
+{{end}}
+{{ if .is_work_laptop}}
+### Work Laptop Specific
+function new-devbox-go() {
+    pay remote new "$1" \
+      --host-type qa-mydev-graviton \
+      --repo stripe-internal/gocode:master \
+      --ide idea \
+      --no-notify-on-ready \
+      --skip-confirm
+}
+function new-devbox-pay(){
+    pay remote new "$1" \
+      --host-type qa-mydev-graviton \
+      --repo stripe-internal/pay-server:master \
+      --ide code \
+      --no-notify-on-ready \
+      --skip-confirm
+}
+{{end}}
+# Zsh Options
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt EXTENDED_HISTORY
+setopt HIST_IGNORE_SPACE
+
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+
+# auto completes
+autoload -U compinit; compinit
+#source <(fzf --zsh)
+
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+source ~/.p10k.zsh

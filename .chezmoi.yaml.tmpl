@@ -1,0 +1,9 @@
+{{- $hostname := .chezmoi.hostname -}}
+
+{{- $is_work_laptop := contains "st-kevinxia" $hostname -}}
+{{- $is_devbox := contains "mydev" $hostname -}}
+{{- $is_work_machine := or $is_work_laptop $is_devbox -}}
+data:
+  is_work_laptop: {{ $is_work_laptop }}
+  is_devbox: {{ $is_devbox }}
+  is_work_machine: {{ $is_work_machine }}
