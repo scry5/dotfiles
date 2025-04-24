@@ -50,6 +50,11 @@ alias gbd="git branch --delete"
 alias gsync="git checkout master && git pull && git checkout - && git rebase master"
 alias gcp="git cherry-pick"
 alias gst="git status"
+
+{{- if or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu") }}
+# When installed with apt, bat turns into batcat
+alias bat="batcat"
+{{end}}
 {{- if .is_work_machine }}
 ## Work Specific
 alias pst="pay stack"
@@ -91,3 +96,4 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 source ~/.p10k.zsh
+
