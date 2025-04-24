@@ -7,9 +7,7 @@
   default = simple
 [core]
   preloadindex = true
-  {{- if .is_work_machine -}}
-  deltabasecachelimit = 4g 
-  {{end}}
+  {{ if .is_work_machine }}deltabasecachelimit = 4g {{end}}
 [feature]
   manyfiles = true
 [diff]
