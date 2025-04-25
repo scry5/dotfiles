@@ -54,6 +54,7 @@ alias gst="git status"
 {{- if and (eq .chezmoi.os "linux") (or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu")) }}
 # When installed with apt, bat turns into batcat
 alias bat="batcat"
+alias fd="fdfind"
 {{end}}
 {{- if .is_work_machine }}
 ## Work Specific
