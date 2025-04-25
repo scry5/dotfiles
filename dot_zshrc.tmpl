@@ -51,7 +51,7 @@ alias gsync="git checkout master && git pull && git checkout - && git rebase mas
 alias gcp="git cherry-pick"
 alias gst="git status"
 
-{{- if or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu") }}
+{{- if and (eq .chezmoi.os "linux") (or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu")) }}
 # When installed with apt, bat turns into batcat
 alias bat="batcat"
 {{end}}
