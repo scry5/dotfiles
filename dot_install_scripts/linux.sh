@@ -1,9 +1,17 @@
 #! /bin/bash
 mkdir -p ~/.local/bin
 if ! command -v nvim 2>&1 >/dev/null; then
-  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-  chmod u+x nvim.appimage
-  sudo mv nvim.appimage ~/.local/bin/nvim
+  ARCH=$(uname -m)
+
+  # Set file name based on architecture
+  if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
+    FILE="nvim-linux-arm64.appimage"
+  else
+    FILE="nvim-linux-x86_64.appimage"
+  fi
+  curl -LO "https://github.com/neovim/neovim/releases/download/v0.11.1/$FILE"
+  chmod u+x "$FILE"
+  mv "$FILE" ~/.local/bin/nvim
 fi
 if ! command -v rg 2>&1 >/dev/null; then
   sudo apt-get install -y ripgrep
