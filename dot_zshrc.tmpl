@@ -1,3 +1,7 @@
+# For testing Cursor - otherwise it hangs when running commands
+if [[ -n "$COMPOSER_NO_INTERACTION" ]]; then
+  return 0
+fi
 {{ if .is_work_laptop}}
 # Stripe Setup
 if [[ -f ~/.stripe/shellinit/zshrc ]]; then
