@@ -22,3 +22,15 @@ fi
 if ! command -v fdfind 2>&1 >/dev/null; then
   sudo apt-get install -y fd-find
 fi
+if ! command -v zellij 2>&1 >/dev/null; then
+  ARCH=$(uname -m)
+  if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
+    ZARCH="aarch64"
+  else
+    ZARCH="x86_64"
+  fi
+  curl -LO "https://github.com/zellij-org/zellij/releases/download/v0.44.3/zellij-${ZARCH}-unknown-linux-musl.tar.gz"
+  tar -xzf "zellij-${ZARCH}-unknown-linux-musl.tar.gz"
+  mv zellij ~/.local/bin/zellij
+  rm "zellij-${ZARCH}-unknown-linux-musl.tar.gz"
+fi
