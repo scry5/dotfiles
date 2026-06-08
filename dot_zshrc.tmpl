@@ -2,6 +2,9 @@
 if [[ -n "$COMPOSER_NO_INTERACTION" ]]; then
   return 0
 fi
+# Zsh completion system
+autoload -U compinit; compinit
+autoload -U +X bashcompinit && bashcompinit
 {{ if .is_work_laptop}}
 # Stripe Setup
 if [[ -f ~/.stripe/shellinit/zshrc ]]; then
@@ -94,10 +97,6 @@ setopt HIST_IGNORE_SPACE
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
-
-# auto completes
-autoload -U compinit; compinit
-#source <(fzf --zsh)
 
 source ~/.powerlevel10k/powerlevel10k.zsh-theme
 
