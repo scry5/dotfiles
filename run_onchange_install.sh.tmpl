@@ -21,10 +21,15 @@ if [ ! -d "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting" ]; then
 fi
 git -C "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting" checkout {{ .zsh_syntax_highlighting_hash }}
 
+if [ ! -d "$ZSH_PLUGINS_DIR/fzf-tab" ]; then
+  git clone https://github.com/Aloxaf/fzf-tab "$ZSH_PLUGINS_DIR/fzf-tab"
+fi
+git -C "$ZSH_PLUGINS_DIR/fzf-tab" checkout {{ .fzf_tab_hash }}
+
 if [ "$(uname)" = "Darwin" ]; then
-  bash "${CHEZMOI_WORKING_TREE}/.chezmoiscripts/install_mac.sh"
+  bash "${CHEZMOI_WORKING_TREE}/helpers/install_mac.sh"
 elif [ "$(uname)" = "Linux" ]; then
-  bash "${CHEZMOI_WORKING_TREE}/.chezmoiscripts/install_linux.sh"
+  bash "${CHEZMOI_WORKING_TREE}/helpers/install_linux.sh"
 else
   echo "unexpected OS $(uname)"
   exit 1

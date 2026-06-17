@@ -4,3 +4,4 @@ brew install ripgrep
 brew install fd
 brew install bat
 brew install zellij
+brew install fzf
