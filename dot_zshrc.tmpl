@@ -2,8 +2,13 @@
 if [[ -n "$COMPOSER_NO_INTERACTION" ]]; then
   return 0
 fi
-# Zsh completion system
-autoload -U compinit; compinit
+# Zsh completion system (rebuild dump once per day)
+autoload -U compinit
+if [ "$(find ~/.zcompdump -mtime +1 2>/dev/null)" ] || [ ! -f ~/.zcompdump ]; then
+  compinit
+else
+  compinit -C
+fi
 autoload -U +X bashcompinit && bashcompinit
 {{ if .is_work_laptop}}
 # Stripe Setup
@@ -113,3 +118,5 @@ if [ -f ~/stripe/corpeng/salt/helpers/zshrc ]; then
 fi
 ### END - Salt configs (managed by salt)
 {{end}}
+source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

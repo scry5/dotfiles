@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+if [ ! -d ~/.powerlevel10k ]; then
+  git clone https://github.com/romkatv/powerlevel10k.git ~/.powerlevel10k
+fi
+git -C ~/.powerlevel10k checkout {{ .powerlevel10k_hash }}
+#if ! command -v tldr 2>&1 >/dev/null; then pip3 install tldr; fi
+
+ZSH_PLUGINS_DIR="${HOME}/.zsh/plugins"
+mkdir -p "$ZSH_PLUGINS_DIR"
+
+if [ ! -d "$ZSH_PLUGINS_DIR/zsh-autosuggestions" ]; then
+  git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_PLUGINS_DIR/zsh-autosuggestions"
+fi
+git -C "$ZSH_PLUGINS_DIR/zsh-autosuggestions" checkout {{ .zsh_autosuggestions_hash }}
+
+if [ ! -d "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting" ]; then
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting"
+fi
+git -C "$ZSH_PLUGINS_DIR/zsh-syntax-highlighting" checkout {{ .zsh_syntax_highlighting_hash }}
+
+if [ "$(uname)" = "Darwin" ]; then
+  bash "${CHEZMOI_WORKING_TREE}/.chezmoiscripts/install_mac.sh"
+elif [ "$(uname)" = "Linux" ]; then
+  bash "${CHEZMOI_WORKING_TREE}/.chezmoiscripts/install_linux.sh"
+else
+  echo "unexpected OS $(uname)"
+  exit 1
+fi

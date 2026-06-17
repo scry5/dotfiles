@@ -9,7 +9,7 @@ if ! command -v nvim 2>&1 >/dev/null; then
   else
     FILE="nvim-linux-x86_64.appimage"
   fi
-  curl -LO "https://github.com/neovim/neovim/releases/download/v0.11.1/$FILE"
+  curl -LO "https://github.com/neovim/neovim/releases/download/v{{ .nvim_version }}/$FILE"
   chmod u+x "$FILE"
   mv "$FILE" ~/.local/bin/nvim
 fi
@@ -29,7 +29,7 @@ if ! command -v zellij 2>&1 >/dev/null; then
   else
     ZARCH="x86_64"
   fi
-  curl -LO "https://github.com/zellij-org/zellij/releases/download/v0.44.3/zellij-${ZARCH}-unknown-linux-musl.tar.gz"
+  curl -LO "https://github.com/zellij-org/zellij/releases/download/v{{ .zellij_version }}/zellij-${ZARCH}-unknown-linux-musl.tar.gz"
   tar -xzf "zellij-${ZARCH}-unknown-linux-musl.tar.gz"
   mv zellij ~/.local/bin/zellij
   rm "zellij-${ZARCH}-unknown-linux-musl.tar.gz"
