@@ -22,6 +22,18 @@ fi
 if ! command -v fdfind 2>&1 >/dev/null; then
   sudo apt-get install -y fd-find
 fi
+if ! command -v fzf 2>&1 >/dev/null; then
+  ARCH=$(uname -m)
+  if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
+    FARCH="arm64"
+  else
+    FARCH="amd64"
+  fi
+  curl -LO "https://github.com/junegunn/fzf/releases/download/v{{ .fzf_version }}/fzf-{{ .fzf_version }}-linux_${FARCH}.tar.gz"
+  tar -xzf "fzf-{{ .fzf_version }}-linux_${FARCH}.tar.gz"
+  mv fzf ~/.local/bin/fzf
+  rm "fzf-{{ .fzf_version }}-linux_${FARCH}.tar.gz"
+fi
 if ! command -v zellij 2>&1 >/dev/null; then
   ARCH=$(uname -m)
   if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then

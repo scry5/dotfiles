@@ -29,7 +29,7 @@ git -C "$ZSH_PLUGINS_DIR/fzf-tab" checkout {{ .fzf_tab_hash }}
 if [ "$(uname)" = "Darwin" ]; then
   bash "${CHEZMOI_WORKING_TREE}/helpers/install_mac.sh"
 elif [ "$(uname)" = "Linux" ]; then
-  bash "${CHEZMOI_WORKING_TREE}/helpers/install_linux.sh"
+  "$CHEZMOI_EXECUTABLE" execute-template < "${CHEZMOI_WORKING_TREE}/helpers/install_linux.sh.tmpl" | bash -euxo pipefail
 else
   echo "unexpected OS $(uname)"
   exit 1
