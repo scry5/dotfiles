@@ -63,6 +63,15 @@ alias gsync="git fetch origin master && git rebase origin/master"
 alias gcp="git cherry-pick"
 alias gst="git status"
 
+# Git alias completions
+compdef _git gco=git-checkout
+compdef _git gcb=git-checkout
+compdef _git ga=git-add
+compdef _git gcp=git-cherry-pick
+compdef _git gbd=git-branch
+compdef _git gbl=git-blame
+compdef _git gbs=git-bisect
+
 {{- if and (eq .chezmoi.os "linux") (or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu")) }}
 # When installed with apt, bat turns into batcat
 alias bat="batcat"
