@@ -46,3 +46,6 @@ if ! command -v zellij 2>&1 >/dev/null; then
   mv zellij ~/.local/bin/zellij
   rm "zellij-${ZARCH}-unknown-linux-musl.tar.gz"
 fi
+if ! command -v cargo 2>&1 >/dev/null; then
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+fi
